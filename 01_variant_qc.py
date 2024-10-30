@@ -58,6 +58,10 @@ intervals = hl.import_locus_intervals(TARGET_INTERVALS, reference_genome="GRCh38
 mt = mt.annotate_rows(not_in_target_intervals = ~hl.is_defined(intervals[mt.locus]))
 mt = mt.filter_rows(mt.not_in_target_intervals, keep=False)
 
+# use variant_qc function to filter to sites with call rate >= 0.9
+mt = hl.variant_qc(mt)
+mt = mt.filter_rows(mt.variant_qc.call_rate >= 0.90)
+
 # filter for GQ, DP, and AB
 mt = mt.filter_entries(
     hl.is_defined(mt.GT) &
