@@ -4,16 +4,29 @@ import hail as hl
 hl.init(driver_cores=8, worker_memory='highmem')
 
 # inputs
+## you can input a matrix table, if available
 MT_PATH = '/path/to/matrix/table/of/called/genotypes.mt'
+## or you can use gVCFs or VCFs
+VCF_PATH = '/path/to/vcfs.vcf'
+
+# exome target intervals
 TARGET_INTERVALS = "/target/intervals/path" 
+
+# low complexity regions
 LCR_PATH = "LCRFromHengHg38.bed"
+
+# variants passing VQSR from GATK
 VQSR_HT = '/path/to/variants/passing/vqsr'
 
 # outputs
-MT_OUT = '/path/to/output/variant/qced/matrix/table'
+MT_OUT = '/path/to/output/variant/qced/matrix/table.mt'
 
-# import matrix table
+# import matrix table 
 mt = hl.read_matrix_table(MT_PATH)
+
+# or import vcfs
+mt = hl.import_vcf(VCF_PATH, reference_genome='GRCh38')
+
 # for this example we'll use the 1kgp + hgdp ref panel built into hail
 mt = hl.experimental.load_dataset(name='gnomad_hgdp_1kg_subset_dense',
                                   version='3.1.2',
@@ -33,8 +46,8 @@ mt = split.union_rows(bi)
 mt = mt.filter_rows(mt.filters == hl.empty_set(hl.tstr), keep = True)
 
 ## however, most experimental datasets will have a separate file with VQSR results to be loaded and filtered:
-vqsr = hl.read_table(VQSR_HT) 
-mt = mt.filter_rows(hl.is_defined(vqsr[mt.row_key]), keep=True)
+passing_vqsr = hl.read_table(VQSR_HT) 
+mt = mt.filter_rows(hl.is_defined(passing_vqsr[mt.row_key]), keep=True)
 
 #filter out LCRs 
 lcr_intervals = hl.import_locus_intervals(LCR_PATH, reference_genome='GRCh38', skip_invalid_intervals=True)
