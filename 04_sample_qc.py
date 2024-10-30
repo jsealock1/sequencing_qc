@@ -13,6 +13,12 @@ PASSING_SAMPLES = '/path/to/output/from/sample/qc.ht'
 mt = hl.read_matrix_table(MT)
 ancestry = hl.read_tablee(ANCESTRY_OUT)
 
+# use sample_qc function to filter to samples with call rate >= 0.90
+mt = hl.sample_qc(mt)
+mt = mt.filter_cols(mt.sample_qc.call_rate >= 0.90)
+mt = mt.drop('sample_qc')
+
+# run sample_qc on samples
 sample_qc_ht = hl.sample_qc(mt).cols().flatten().key_by('s')
 ht = sample_qc_ht.annotate(qc_pop = ancestry[sample_qc_ht.s].Population)
 
