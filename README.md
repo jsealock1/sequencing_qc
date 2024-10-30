@@ -32,4 +32,7 @@ All of the quality control steps outlined here can be conducted directly in pyth
 However, the code here is provided as a starting point for QC. 
 We suggest analysts visualize variant/sample QC metrics and adjust QC parameters accordingly. 
 
+## Help
+Help forum for troubleshooting and general Hail questions: https://discuss.hail.is/ <br/>
+Questions about this repo: jsealock@broadinstitute.org 
 
