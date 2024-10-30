@@ -18,6 +18,13 @@ Output: The final script here outputs a Hail matrix table. Additionally, several
 - hail table of samples passing outlier filtering (step 4) <br/>
 - hail table of samples passing sex check (step 5) <br/>
 
+## How to use this repo
+This repository is meant to act as a template for basic quality control steps using Hail. All of the quality control steps outlined here can be conducted directly in python using the Hail package. <br/>
+The scripts are separated by different QC steps, with each step building off the previous. <br/>
+The order of the steps are denoted by the numerical prefix of each files. <br/>
+The beginning of each file contains input/output file paths. For each step, specify your own files to run the Hail code on your dataset. <br/>
+**The code here is provided as a starting point for QC. Every dataset will require unique QC, therefore, we suggest analysts visualize variant QC metrics, sample QC metrics, PCA plots, and relatedness distributions to adjust QC parameters accordingly.**
+
 ## QC Steps
 This repo contains 6 scripts to run basic quality control filtering using Hail: <br/>
 01_variant_qc.py : applies filters for genotypes, removes low-complexity regions, and filters to exome regions (if necessary) <br/>
@@ -27,10 +34,7 @@ This repo contains 6 scripts to run basic quality control filtering using Hail: 
 05_sex_check.py : calculates F-statistic on X-chromosme to assign sex and filter out samples with discordant sex and gender <br/>
 06_output_qced_data.py : filters to passing samples from each step to output qc'ed matrix table <br/>
 
-## Important Information
-All of the quality control steps outlined here can be conducted directly in python using the Hail package. 
-However, the code here is provided as a starting point for QC. 
-We suggest analysts visualize variant/sample QC metrics and adjust QC parameters accordingly. 
+
 
 ## Help
 Help forum for troubleshooting and general Hail questions: https://discuss.hail.is/ <br/>
