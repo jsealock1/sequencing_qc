@@ -18,14 +18,14 @@ mt = mt.filter_cols((mt.status=="case") | (mt.status=="control"), keep=True)
 
 # ld prune
 biallelic_mt = mt.filter_rows(hl.len(mt.alleles) == 2)
-pruned_variant_table = hl.ld_prune(mt.GT, r2=0.2, bp_window_size=500000)
+pruned_variant_table = hl.ld_prune(biallelic_mt.GT)
 
 # filter to pruned variants
 dataset = mt.filter_rows(hl.is_defined(pruned_variant_table[mt.row_key]))
 
 # run pc_relate
 dataset = dataset.annotate_cols(is_case = hl.if_else(dataset.status=="case", hl.bool(True), hl.bool(False)))
-pc_rel = hl.pc_relate(dataset.GT, 0.01, k=10, statistics='kin', min_kinship=0.2, block_size=2048)
+pc_rel = hl.pc_relate(dataset.GT, 0.01, k=10, statistics='kin', min_kinship=0.2)
 pairs = pc_rel.filter(pc_rel['kin'] > 0.2)
 
 # filter for max independent set for case/control
