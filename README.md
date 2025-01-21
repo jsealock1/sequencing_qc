@@ -5,6 +5,8 @@ Hail documentation: [hail.is](https://hail.is/) <br/>
 Hail requires Python3 and Java 11 JRE <br/>
 Install Hail: pip install hail <br/>
 More detailed instructions: https://hail.is/docs/0.2/getting_started.html <br/>
+Additional Hail tutorials can be found here: https://hail.is/docs/0.2/tutorials-landing.html <br/>
+
 
 ## Input and Output
 Input: Hail can handle a variety of genomic datasets, including VCFs, gVCFs, PLINK bed/bim/fam, and bgen files. More information can be found here: https://hail.is/docs/0.2/methods/impex.html <br/>
