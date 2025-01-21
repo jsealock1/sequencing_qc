@@ -3,6 +3,9 @@
 import hail as hl
 hl.init(driver_cores=8, worker_memory='highmem')
 
+import gnomad
+from gnomad.sample_qc.filtering import compute_stratified_metrics_filter
+
 MT = '/path/to/output/high_quality_sites.mt' # output from step 1
 ANCESTRY_OUT = '/path/to/ancestry/output.ht'
 PASSING_SAMPLES = '/path/to/output/from/sample/qc.ht'
